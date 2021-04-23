@@ -1,0 +1,176 @@
+<html>
+    <head>
+        <title>Nova aba</title>
+        <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.3.1/p5.min.js"></script>
+
+        <script language="javascript" type="text/javascript" src="boids.js"></script>
+        <script language="javascript" type="text/javascript" src="bird.js"></script>
+        <script language="javascript" type="text/javascript" src="obstacle.js"></script>
+        <script language="javascript" type="text/javascript" src="sketch.js"></script>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+        
+        <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
+
+        <style>
+            body {
+                padding: 0;
+                margin: 0px;
+                overflow: auto;
+                display: flex;
+                justify-content: center;
+                font-family: 'Roboto', sans-serif;
+            }
+            canvas {
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+            }
+            .principal {
+                width: auto;
+                max-width: 80%;
+                height: auto;
+                align-self: center;
+                display: flex;
+                flex-direction: column;
+                z-index: 10;
+            }
+            .shortcuts {
+                width: auto;
+                height: auto;
+                align-self: center;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+            }
+            .short {
+                width: 100px;
+                height: 100px;
+                margin: 10px;
+                text-align: center;
+                border-radius: 3px;
+                background: #ffffff;
+                transition-duration: 200ms;
+                cursor: pointer;
+                overflow: hidden;
+            }
+
+            .s_img {
+                width: 100%;
+                height: 100%;
+                background-size: cover;
+                transition-duration: 200ms;
+            }
+
+            .short span {
+                line-height: 14px;
+                font-size: 14px;
+                font-weight: 700;
+                color: #4b6584;
+            }
+
+            .short:hover {
+                transform: scale(1.04);
+            }
+            .short:hover .s_img {
+                transform: scale(1.08);
+            }
+
+            span#saudacao {
+                font-size: 1rem;
+                color: #7f8c8d;
+                text-align: center;
+                font-weight: 700;
+                margin-bottom: -25px;
+            }
+            span#hora {
+                font-size: 10rem;
+                min-height: 12rem;
+                font-weight: 700;
+                text-align: center;
+                color: #7f8c8d;
+            }
+
+            a {
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="principal">
+            <span id="saudacao">
+            </span>
+            <span id="hora">
+            </span>
+            <div class="shortcuts">
+                <a href="https://www.youtube.com/">
+                    <div class="short">
+                        <div class="s_img" style="background-image: url('assets/YouTube.png');"></div>
+                    </div>
+                </a>
+                <a href="https://www.disneyplus.com/home">
+                    <div class="short">
+                        <div class="s_img" style="background-image: url('assets/Disney+.png');"></div>
+                    </div>
+                </a>
+                <a href="https://www.netflix.com/browse">
+                    <div class="short">
+                        <div class="s_img" style="background-image: url('assets/Netflix.png');"></div>
+                    </div>
+                </a>
+                <a href="https://www.primevideo.com/">
+                    <div class="short">
+                        <div class="s_img" style="background-image: url('assets/Amazon Prime.png');"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <script>
+            var meses = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro']
+
+            var saudacaoHTML = document.getElementById('saudacao')
+            var horaHTML = document.getElementById('hora')
+            
+            var typewriter = new Typewriter(horaHTML, {
+                loop: false,
+                cursor: ''
+            })
+
+            atualizarInformacoes()
+            setInterval(atualizarInformacoes, 5000)
+
+            function atualizarInformacoes(){
+                var hoje = new Date()
+                var dia = hoje.getDate()
+                var mes = hoje.getMonth()
+                var ano = hoje.getFullYear()
+
+                var hora = hoje.getHours()
+                var minuto = hoje.getMinutes()
+
+                saudacaoHTML.innerText = `Olá, hoje é ${addZero(dia)}/${meses[mes]}/${ano}`
+
+                let horaAgora = `${addZero(hora)}:${addZero(minuto)}`
+
+                if(horaHTML.innerText == ''){
+                    typewriter.typeString(`${addZero(hora)}:${addZero(minuto)}`).start()
+                } else {
+                    if(horaHTML.innerText != horaAgora){
+                        typewriter.deleteAll()
+                            .typeString(`${addZero(hora)}:${addZero(minuto)}`)
+                            .start()
+                    }
+                }
+            }
+
+            function addZero(i) {
+                if (i < 10)
+                    i = "0" + i
+                return i
+            }
+        </script>
+    </body>
+</html>
